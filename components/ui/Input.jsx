@@ -41,7 +41,7 @@ const Input = forwardRef(({ className, type, label, error, icon: Icon, rightIcon
                 </div>
             )}
             {error && (
-                <p className="mt-1 text-body-medium text-tertiary px-4">{error}</p>
+                <p className="mt-1 text-body-medium text-error px-4">{error}</p>
             )}
         </div>
     );

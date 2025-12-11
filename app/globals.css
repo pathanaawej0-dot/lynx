@@ -1,84 +1,98 @@
-@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&family=JetBrains+Mono:wght@400&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&family=Open+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400&display=swap');
 
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
 :root {
-  /* Gemini V2 Base Tokens */
-  --background: #131314;
-  --surface: #1E1F20;
+  /* Google/Gemini Inspired Theme - Dark Mode Default */
+
+  /* Backgrounds */
+  --background: #131314;       /* Main App Background (Deepest) */
+  --surface: #1E1F20;          /* Sidebar / Cards / Nav */
+  --surface-container: #28292A; /* Inputs / Active States */
+  --surface-container-high: #3C4043; /* Hover States */
 
   /* Text */
-  --on-surface: #E3E3E3;
-  /* Main text */
-  --on-surface-variant: #C4C7C5;
-  /* Secondary text */
-  --on-surface-dim: #444746;
-  /* Disabled/Placeholder */
+  --on-background: #E3E3E3;    /* Primary Text */
+  --on-surface: #E3E3E3;       /* Primary Text on Surface */
+  --on-surface-variant: #C4C7C5; /* Secondary Text / Icons */
+  --on-surface-dim: #444746;   /* Disabled / Placeholders */
 
-  /* Interactive State Layers (for hovers) */
-  --surface-bright: #282A2C;
-  /* Hover state */
-  --surface-container-high: #282A2C;
-  --surface-container-highest: #3C4043;
+  /* Primary Accent (Google Blue-ish) */
+  --primary: #A8C7FA;          /* Interactive Elements */
+  --primary-foreground: #062E6F; /* Text on Primary */
 
-  /* Accents */
-  --primary: #A8C7FA;
-  /* Google Blue */
-  --secondary: #A8C7FA;
-  --tertiary: #D3E3FD;
+  /* Secondary Accent (Pastel/Muted) */
+  --secondary: #6DD58C;        /* Success / Secondary Action */
+  --secondary-foreground: #0A3818;
 
-  /* Borders */
-  --outline: #444746;
-  --outline-variant: #444746;
+  /* Tertiary Accent */
+  --tertiary: #D3E3FD;         /* Highlights */
+
+  /* Functional Colors */
+  --error: #F2B8B5;
+  --outline: #444746;          /* Borders */
+  --outline-variant: #444746;  /* Subtle Borders */
+
+  /* Glassmorphism */
+  --glass-bg: rgba(30, 31, 32, 0.7);
+  --glass-border: rgba(255, 255, 255, 0.08);
 }
 
 html,
 body {
   height: 100%;
   overscroll-behavior: none;
-  /* Prevent elastic bounce */
+  scroll-behavior: smooth;
 }
 
 body {
-  color: var(--on-surface);
+  color: var(--on-background);
   background: var(--background);
-  font-family: 'Roboto', sans-serif;
-  overflow: hidden;
-  /* App-like feel, internal scrolling only */
+  font-family: 'Open Sans', 'Roboto', sans-serif; /* Close to Google Sans */
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
-/* Scrollbar Hiding Utility */
-.scrollbar-hide::-webkit-scrollbar {
-  display: none;
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
 }
 
-.scrollbar-hide {
-  -ms-overflow-style: none;
-  scrollbar-width: none;
+::-webkit-scrollbar-track {
+  background: transparent;
 }
 
-/* Animations */
-@keyframes fadeIn {
-  from {
-    opacity: 0;
-    transform: translateY(10px);
-  }
-
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
+::-webkit-scrollbar-thumb {
+  background: #444746;
+  border-radius: 4px;
 }
 
-.animate-fadeIn {
-  animation: fadeIn 0.4s ease-out forwards;
+::-webkit-scrollbar-thumb:hover {
+  background: #5E5E5E;
 }
 
 /* Utilities */
 @layer utilities {
   .text-balance {
     text-wrap: balance;
+  }
+
+  .glassmorphism {
+    background: var(--glass-bg);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--glass-border);
+  }
+
+  .scrollbar-hide::-webkit-scrollbar {
+      display: none;
+  }
+
+  .scrollbar-hide {
+      -ms-overflow-style: none;
+      scrollbar-width: none;
   }
 }
