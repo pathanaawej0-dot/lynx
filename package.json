@@ -20,6 +20,7 @@
     "next-auth": "^4.24.0",
     "pgvector": "^0.2.0",
     "postgres": "^3.4.0",
+    "razorpay": "^2.9.6",
     "react": "^18.3.0",
     "react-dom": "^18.3.0",
     "react-markdown": "^10.1.0",
@@ -28,6 +29,7 @@
     "tailwind-merge": "^3.4.0"
   },
   "devDependencies": {
+    "@tailwindcss/typography": "^0.5.19",
     "autoprefixer": "^10.4.0",
     "eslint": "^8.0.0",
     "eslint-config-next": "^14.2.0",

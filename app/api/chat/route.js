@@ -9,6 +9,8 @@ import {
   updateConversation,
   updateConversationTimestamp,
   getConversation,
+  checkAndResetCredits,
+  decrementCredits
 } from '@/lib/db';
 import { generateEmbedding, streamChat, generateTitle, agentDecision } from '@/lib/gemini';
 
@@ -38,6 +40,19 @@ export async function POST(request) {
     }
 
     const userId = session.user.id;
+
+    // Credit Check
+    const currentCredits = await checkAndResetCredits(userId);
+    if (currentCredits <= 0) {
+       return new Response(JSON.stringify({
+           error: 'Daily limit reached',
+           code: 'LIMIT_REACHED'
+       }), {
+        status: 403,
+        headers: { 'Content-Type': 'application/json' },
+      });
+    }
+
     let convId = conversationId;
     let isNewConversation = false;
 
@@ -53,6 +68,21 @@ export async function POST(request) {
           headers: { 'Content-Type': 'application/json' },
         });
       }
+    }
+
+    // Decrement credits *before* starting the expensive AI work
+    // In a real app, maybe decrement after success, but to prevent abuse, reserve first.
+    // Simpler: decrement on success, but check here.
+    // Let's decrement now.
+    const success = await decrementCredits(userId);
+    if (!success) {
+         return new Response(JSON.stringify({
+           error: 'Daily limit reached',
+           code: 'LIMIT_REACHED'
+       }), {
+        status: 403,
+        headers: { 'Content-Type': 'application/json' },
+      });
     }
 
     const userMessage = await createMessage({

@@ -174,9 +174,9 @@ export default function ConversationPage() {
   }
 
   return (
-    <div className="flex flex-col h-full bg-background">
+    <div className="flex flex-col h-full bg-background relative">
       {/* Header */}
-      <header className="h-16 flex items-center justify-between px-6 border-b border-outline-variant bg-surface sticky top-0 z-10">
+      <header className="h-16 flex items-center justify-between px-6 border-b border-outline-variant/30 bg-background/90 backdrop-blur-md sticky top-0 z-30 transition-all">
         <div className="flex-1 min-w-0 mr-4">
           {isEditingTitle ? (
             <input
@@ -185,33 +185,37 @@ export default function ConversationPage() {
               onChange={(e) => setTitle(e.target.value)}
               onBlur={handleTitleSave}
               onKeyDown={(e) => e.key === 'Enter' && handleTitleSave()}
-              className="bg-transparent border-b border-primary text-title-large font-medium text-on-surface w-full focus:outline-none"
+              className="bg-transparent border-b border-primary text-title-medium font-medium text-on-surface w-full focus:outline-none py-1"
             />
           ) : (
             <div className="flex items-center gap-2 group cursor-pointer" onClick={() => setIsEditingTitle(true)}>
-              <h1 className="text-title-large font-medium text-on-surface truncate">{title}</h1>
-              <Pencil size={16} className="text-on-surface-variant opacity-0 group-hover:opacity-100 transition-opacity" />
+              <h1 className="text-title-medium font-medium text-on-surface truncate">{title}</h1>
+              <Pencil size={14} className="text-on-surface-variant opacity-0 group-hover:opacity-100 transition-opacity" />
             </div>
           )}
         </div>
-        <Button variant="icon" onClick={handleDelete} title="Delete Chat">
-          <Trash2 size={20} className="text-on-surface-variant hover:text-error" />
+        <Button variant="icon" size="icon-sm" onClick={handleDelete} title="Delete Chat">
+          <Trash2 size={18} className="text-on-surface-variant hover:text-error" />
         </Button>
       </header>
 
-      {/* Messages */}
-      <div className="flex-1 overflow-y-auto px-4 py-6 scroll-smooth">
-        <div className="max-w-4xl mx-auto space-y-2">
+      {/* Messages Area */}
+      <div className="flex-1 overflow-y-auto overflow-x-hidden scroll-smooth">
+        <div className="max-w-4xl mx-auto w-full pb-40 pt-4 px-4 space-y-6">
           {messages.map((msg) => (
             <MessageBubble key={msg.id} message={msg} />
           ))}
-          {loading && <ThinkingIndicator />}
+          {loading && (
+            <div className="animate-fade-in pl-4">
+               <ThinkingIndicator />
+            </div>
+          )}
           <div ref={messagesEndRef} className="h-4" />
         </div>
       </div>
 
-      {/* Input */}
-      <div className="pb-6 pt-2 bg-gradient-to-t from-background via-background to-transparent">
+      {/* Input Area */}
+      <div className="absolute bottom-0 left-0 w-full bg-gradient-to-t from-background via-background to-transparent pt-12 pb-2 z-20">
         <ChatInput onSend={handleSend} disabled={loading} />
       </div>
     </div>
