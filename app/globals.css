@@ -1,0 +1,84 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&family=JetBrains+Mono:wght@400&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  /* Gemini V2 Base Tokens */
+  --background: #131314;
+  --surface: #1E1F20;
+
+  /* Text */
+  --on-surface: #E3E3E3;
+  /* Main text */
+  --on-surface-variant: #C4C7C5;
+  /* Secondary text */
+  --on-surface-dim: #444746;
+  /* Disabled/Placeholder */
+
+  /* Interactive State Layers (for hovers) */
+  --surface-bright: #282A2C;
+  /* Hover state */
+  --surface-container-high: #282A2C;
+  --surface-container-highest: #3C4043;
+
+  /* Accents */
+  --primary: #A8C7FA;
+  /* Google Blue */
+  --secondary: #A8C7FA;
+  --tertiary: #D3E3FD;
+
+  /* Borders */
+  --outline: #444746;
+  --outline-variant: #444746;
+}
+
+html,
+body {
+  height: 100%;
+  overscroll-behavior: none;
+  /* Prevent elastic bounce */
+}
+
+body {
+  color: var(--on-surface);
+  background: var(--background);
+  font-family: 'Roboto', sans-serif;
+  overflow: hidden;
+  /* App-like feel, internal scrolling only */
+}
+
+/* Scrollbar Hiding Utility */
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;
+}
+
+.scrollbar-hide {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+/* Animations */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-fadeIn {
+  animation: fadeIn 0.4s ease-out forwards;
+}
+
+/* Utilities */
+@layer utilities {
+  .text-balance {
+    text-wrap: balance;
+  }
+}
